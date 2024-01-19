@@ -504,7 +504,30 @@ namespace heroesContraMonstruoV2
                         }
                         else if (dificultySelect == 4)
                         {
-                            
+                            archerHP = heroesContraMonstruoClass.randomNumberGenerator(minArchHP, maxArchHP);
+                            actualArcherHP = archerHP;
+                            archerDamage = heroesContraMonstruoClass.randomNumberGenerator(minArchDamage, maxArchDamage);
+                            archerDamageReduction = heroesContraMonstruoClass.randomNumberGenerator(minArchDamageReduction, maxArchDamageReduction);
+
+                            barbarianHP = heroesContraMonstruoClass.randomNumberGenerator(minBarbHP, maxBarbHP);
+                            actualBarbarianHP = barbarianHP;
+                            barbarianDamage = heroesContraMonstruoClass.randomNumberGenerator(minBarbDamage, maxBarbDamage);
+                            barbarianDamageReduction = heroesContraMonstruoClass.randomNumberGenerator(minBarbDamageReduction, maxBarbDamageReduction);
+
+                            mageHP = heroesContraMonstruoClass.randomNumberGenerator(minMageHP, maxMageHP);
+                            actualMageHP = mageHP;
+                            mageDamage = heroesContraMonstruoClass.randomNumberGenerator(minMageDamage, maxMageDamage);
+                            mageDamageReduction = heroesContraMonstruoClass.randomNumberGenerator(minMageDamageReduction, maxMageDamageReduction);
+
+
+                            druidHP = heroesContraMonstruoClass.randomNumberGenerator(minDruiHP, maxDruiHP);
+                            actualDruidHP = druidHP;
+                            druidDamage = heroesContraMonstruoClass.randomNumberGenerator(minDruiDamage, maxDruiDamage);
+                            druidDamageReduction = heroesContraMonstruoClass.randomNumberGenerator(minDruiDamageReduction, maxDruiDamageReduction);
+
+                            monsterHP = heroesContraMonstruoClass.randomNumberGenerator(minMonsHP, maxMonsHP);
+                            monsterDamage = heroesContraMonstruoClass.randomNumberGenerator(minMonsDamage, maxMonsDamage);
+                            monsterDamageReduction = heroesContraMonstruoClass.randomNumberGenerator(minMonsDamageReduction, maxMonsDamageReduction);
                         }
                         else
                         {
