@@ -21,6 +21,10 @@ namespace heroesContraMonstruoV2
             const string introduceDMG = "Introduce su daño [{0}-{1}]";
             const string introduceDMGRed = "Introduce su reducción de daño[{0}-{1}]";
             const string minValAssign = "3 fallos, valor mínimo asignado\n";
+            const string daleSabor = "Estos heroes se ven fuertes, pero les falta un poco de personalidad\nDales unos nombres.\n\n" +
+                "(El formato para los nombres es el siguiente: 'nombre, nombre, nombre, nombre' sin comillas, separados por comas,\n y en orden Arquera, Barbaro, Mago, Druida, para que el juego los detecte bien)";
+
+            const string preBattleStatsDisplay = "{0}\nVida: {1}\nDaño: {2}\nReducción de daño: {3}%";
 
             int mainMenuSelect = 0;
             int dificultySelect = 0;
@@ -29,6 +33,12 @@ namespace heroesContraMonstruoV2
             int attTries = 0;
             int statInput = 0;
             bool statCheck = false;
+
+            string heroesNames;
+            string[] namesArray = new string[4];
+
+            string[] monsterNames = {"Estus, el bebesangre", "Gorlock, el destructor", "El devoramundos", "Titán Speakerman"};
+            string monsterName = monsterNames[heroesContraMonstruoClass.randomNumberGenerator(0, 2)];
 
             //stats arquera
             int archerHP = 0;
@@ -107,7 +117,7 @@ namespace heroesContraMonstruoV2
             int monsterStagger = 0;
 
             int maxMonsHP = 10000;
-            int minMonsHP = 70000;
+            int minMonsHP = 7000;
 
             int maxMonsDamage = 400;
             int minMonsDamage = 300;
@@ -137,6 +147,7 @@ namespace heroesContraMonstruoV2
 
                 if (mainMenuSelect == 1)
                 {
+                    //seleccion de dificultad y creacion de personajes
                     Console.WriteLine(diffSelectMSG);
                     while (dificultySelect < 1 || dificultySelect > 4)
                     {
@@ -501,6 +512,82 @@ namespace heroesContraMonstruoV2
 
                             Console.WriteLine(pressToCont);
                             Console.ReadKey();
+
+                            //Creación del monstruo
+                            Console.Clear();
+                            Console.WriteLine("Ahora crearemos al monstruo");
+
+                            Console.WriteLine(introduceHP, minMonsHP, maxMonsHP);
+                            while (attTries < 3 && !statCheck)
+                            {
+                                statInput = Convert.ToInt32(Console.ReadLine());
+                                statCheck = heroesContraMonstruoClass.statChecker(statInput, minMonsHP, maxMonsHP);
+                                if (!statCheck)
+                                {
+                                    Console.WriteLine(mainMenuFail);
+                                    attTries++;
+                                }
+                                else
+                                {
+                                    monsterHP = statInput;
+                                }
+                            }
+                            if (attTries == 3)
+                            {
+                                Console.WriteLine(minValAssign);
+                                monsterHP = minMonsHP;
+                            }
+                            attTries = 0;
+                            statCheck = false;
+
+                            Console.WriteLine(introduceDMG, minMonsDamage, maxMonsDamage);
+                            while (attTries < 3 && !statCheck)
+                            {
+                                statInput = Convert.ToInt32(Console.ReadLine());
+                                statCheck = heroesContraMonstruoClass.statChecker(statInput, minMonsDamage, maxMonsDamage);
+                                if (!statCheck)
+                                {
+                                    Console.WriteLine(mainMenuFail);
+                                    attTries++;
+                                }
+                                else
+                                {
+                                    monsterDamage = statInput;
+                                }
+                            }
+                            if (attTries == 3)
+                            {
+                                Console.WriteLine(minValAssign);
+                                monsterDamage = minMonsDamage;
+                            }
+                            attTries = 0;
+                            statCheck = false;
+
+                            Console.WriteLine(introduceDMGRed, minMonsDamageReduction, maxMonsDamageReduction);
+                            while (attTries < 3 && !statCheck)
+                            {
+                                statInput = Convert.ToInt32(Console.ReadLine());
+                                statCheck = heroesContraMonstruoClass.statChecker(statInput, minMonsDamageReduction, maxMonsDamageReduction);
+                                if (!statCheck)
+                                {
+                                    Console.WriteLine(mainMenuFail);
+                                    attTries++;
+                                }
+                                else
+                                {
+                                    monsterDamageReduction = statInput;
+                                }
+                            }
+                            if (attTries == 3)
+                            {
+                                Console.WriteLine(minValAssign);
+                                monsterDamageReduction = minMonsDamageReduction;
+                            }
+                            attTries = 0;
+                            statCheck = false;
+
+                            Console.WriteLine(pressToCont);
+                            Console.ReadKey();
                         }
                         else if (dificultySelect == 4)
                         {
@@ -534,6 +621,28 @@ namespace heroesContraMonstruoV2
                             Console.WriteLine(mainMenuFail);
                         }
                     }
+
+                    //Revisión de stats y selección de nombres
+                    Console.Clear();
+                    Console.WriteLine(daleSabor);
+                    heroesNames = Console.ReadLine();
+                    namesArray = heroesContraMonstruoClass.nameArrayGenerator(heroesNames);
+
+                    Console.Clear();
+                    Console.WriteLine("Arquera " + preBattleStatsDisplay, namesArray[0], archerHP, archerDamage, archerDamageReduction);
+                    Console.WriteLine("\nBárbaro " + preBattleStatsDisplay, namesArray[1], barbarianHP, barbarianDamage, barbarianDamageReduction);
+                    Console.WriteLine("\nMaga " + preBattleStatsDisplay, namesArray[2], mageHP, mageDamage, mageDamageReduction);
+                    Console.WriteLine("\nDruida " + preBattleStatsDisplay, namesArray[3], druidHP, druidDamage, druidDamageReduction);
+
+                    Console.WriteLine("\n\nTu enemigo: " + preBattleStatsDisplay, monsterName, monsterHP, monsterDamage, monsterDamageReduction);
+                    Console.ReadKey();
+
+                    Console.WriteLine("Pulsa cualquier tecla para iniciar la batalla");
+                    Console.ReadKey();
+
+
+
+                    //Turnos
                 }
             }
         }
