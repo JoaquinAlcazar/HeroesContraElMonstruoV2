@@ -34,6 +34,7 @@ Resultado esperado: True
 ## Método randomNumberGenerator
 
 ### Dominio
+Números enteros (Int)
 
 ### Valores límite
 Para el rango máximo del generador:
@@ -58,15 +59,23 @@ Resultado esperado: Un número entre 0 y 6 (Comprobado con statCheck)
 ## Método nameArrayGenerator
 
 ### Dominio
+Cadenas de carácteres (string)
 
-### Valores límite
-Limite superior: 
-Límite inferior: 
+### Valores límite (en número de caracteres)
 
-### Clases de equivalencia
+[0,1,2...+infinito]
 
+
+### Clases de equivalencia (en número de carácteres)
+clases válidas: [8,9,10...+Infinito]
+Siempre y cuando se separen por comas y entre cada coma haya por lo menos un carácter
+
+clases invalidas: [0,1,2,3,4,5,6,7]
 ### Caso de prueba
+string nombres: "a,e,i,o"
 
+Resultado esperado:
+arrayNombres = {"a", "e", "i", "o"}
 
 
 ## Método damageCalculator
