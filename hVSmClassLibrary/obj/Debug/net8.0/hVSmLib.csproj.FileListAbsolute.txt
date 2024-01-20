@@ -1,0 +1,11 @@
+C:\Users\quime\Documents\Modulo3\HeroesVSMonstruo\hVSmLib\bin\Debug\net8.0\hVSmLib.deps.json
+C:\Users\quime\Documents\Modulo3\HeroesVSMonstruo\hVSmLib\bin\Debug\net8.0\hVSmLib.dll
+C:\Users\quime\Documents\Modulo3\HeroesVSMonstruo\hVSmLib\bin\Debug\net8.0\hVSmLib.pdb
+C:\Users\quime\Documents\Modulo3\HeroesVSMonstruo\hVSmLib\obj\Debug\net8.0\hVSmLib.GeneratedMSBuildEditorConfig.editorconfig
+C:\Users\quime\Documents\Modulo3\HeroesVSMonstruo\hVSmLib\obj\Debug\net8.0\hVSmLib.AssemblyInfoInputs.cache
+C:\Users\quime\Documents\Modulo3\HeroesVSMonstruo\hVSmLib\obj\Debug\net8.0\hVSmLib.AssemblyInfo.cs
+C:\Users\quime\Documents\Modulo3\HeroesVSMonstruo\hVSmLib\obj\Debug\net8.0\hVSmLib.csproj.CoreCompileInputs.cache
+C:\Users\quime\Documents\Modulo3\HeroesVSMonstruo\hVSmLib\obj\Debug\net8.0\hVSmLib.dll
+C:\Users\quime\Documents\Modulo3\HeroesVSMonstruo\hVSmLib\obj\Debug\net8.0\refint\hVSmLib.dll
+C:\Users\quime\Documents\Modulo3\HeroesVSMonstruo\hVSmLib\obj\Debug\net8.0\hVSmLib.pdb
+C:\Users\quime\Documents\Modulo3\HeroesVSMonstruo\hVSmLib\obj\Debug\net8.0\ref\hVSmLib.dll
