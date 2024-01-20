@@ -1,58 +1,58 @@
-### Heroes contra el monstruo Tests
+# Heroes contra el monstruo Tests
 
 ## Método statChecker
 
-# Dominio
+### Dominio
 
-# Valores límite
+### Valores límite
 
-# Clases de equivalencia
+### Clases de equivalencia
 
-# Caso de prueba
+### Caso de prueba
 
 
 ## Método randomNumberGenerator
 
-# Dominio
+### Dominio
 
-# Valores límite
+### Valores límite
 
-# Clases de equivalencia
+### Clases de equivalencia
 
-# Caso de prueba
+### Caso de prueba
 
 
 ## Método nameArrayGenerator
 
-# Dominio
+### Dominio
 
-# Valores límite
+### Valores límite
 
-# Clases de equivalencia
+### Clases de equivalencia
 
-# Caso de prueba
+### Caso de prueba
 
 
 
 ## Método damageCalculator
 
-# Dominio
+### Dominio
 
-# Valores límite
+### Valores límite
 
-# Clases de equivalencia
+### Clases de equivalencia
 
-# Caso de prueba
+### Caso de prueba
 
 
 
 ## Método druidHealing
 
-# Dominio
+### Dominio
 
-# Valores límite
+### Valores límite
 
-# Clases de equivalencia
+### Clases de equivalencia
 
-# Caso de prueba
+### Caso de prueba
 
