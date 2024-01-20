@@ -1,4 +1,10 @@
-# Heroes contra el monstruo Tests
+# Heroes contra el monstruo README
+
+## Funcionalidades extra
+-Escoger un nombre aleatorio para el monstruo de entre 4
+ 
+
+##Tests Unitarios
 ---
 ## Método statChecker
 
@@ -104,15 +110,32 @@ reducciónDeDaño = 30;
 
 resultado esperado = 70;
 
+---
 ## Método druidHealing
 
 ### Dominio
+Números enteros
 
 ### Valores límite
-Limite superior: 
-Límite inferior: 
+Para el HP actual
+Limites: [-Infinito...+Infinito]
++Infinito puede tomar el valor del HP máximo [-Infinito...HPmáximo]
+
+Para el HP máximo
+Límites: [1,2,3...+Infinito]
 
 ### Clases de equivalencia
+Para el HP actual
+Clases válidas: [1,2,3...+Infinito]
+Clases inválidas: [-Infinito...-2,-1,0]
+
+Para el HP máximo
+Clases válidas: [1,2,3...+Infinito]
+Clases inválidas: [-Infinito...-2,-1,0]
 
 ### Caso de prueba
+HPActual = 2000;
+HP Máximo = 2100;
 
+Resultado esperado:
+HPActual = 2100;
