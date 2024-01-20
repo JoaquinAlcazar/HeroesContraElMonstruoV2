@@ -1,5 +1,6 @@
 ﻿using hVSmLib;
 using Microsoft.VisualStudio.TestPlatform.Common.Interfaces;
+using System.Dynamic;
 
 namespace heroesContraMonstruoV2
 {
@@ -25,11 +26,29 @@ namespace heroesContraMonstruoV2
                 "(El formato para los nombres es el siguiente: 'nombre, nombre, nombre, nombre' sin comillas, separados por comas,\n y en orden Arquera, Barbaro, Mago, Druida, para que el juego los detecte bien)";
 
             const string preBattleStatsDisplay = "{0}\nVida: {1}\nDaño: {2}\nReducción de daño: {3}%";
+            const string turnOf = "Turno de {0}: \n";
+            const string actionsMenu = "\n\n¿Que hará?\n1.Atacar al enemigo\n2.Defenderse\n3Habilidad especial\n4.Pasar turno";
+            const string actionTriesFail = "Has fallado 3 veces en introducir una acción valida, pasas el turno automáticamente";
+
+            const string action1MSG = "Haces {0} puntos de daño a {1}\nVida restante de {1}: {2}";
+            const string action2MSG = "Te defiendes y aumentas tu reducción de daño el siguiente turno!";
+            const string archerSpecial = "¡Flecha mágica!\nHas aturdido al monstruo y no podrá atacar los siguiente 2 turnos";
+            const string barbarianSpecial = "¡¡¡RRRAAAAAHHHH!!!\n¡Te has enfadado un montón y te has vuelto invulnerable al daño por 2 turnos!";
+            const string mageSpecial = "¡Bola de fuego!\nTu super hechizo ha dañado a {0} y pierde {1} puntos de vida";
+            const string druidSpecial = "¡El abrazo de la naturaleza!\n¡Has curado a tus compañeros!";
+            const string healMSG = "Vida actual de {0}: {1}HP/{2}HP";
+            const string action4MSG = "Pasas el turno.";
+
+            const string specialCD = "Tu habilidad especial se está recargando. {0} turnos restantes";
+            const string isDead = "A {0} no le quedan puntos de vida. No puede atacar";
+
+
 
             int mainMenuSelect = 0;
             int dificultySelect = 0;
+            int actionSelection = 0;
 
-
+            int actionTries = 0;
             int attTries = 0;
             int statInput = 0;
             bool statCheck = false;
@@ -37,8 +56,10 @@ namespace heroesContraMonstruoV2
             string heroesNames;
             string[] namesArray = new string[4];
 
-            string[] monsterNames = {"Estus, el bebesangre", "Gorlock, el destructor", "El devoramundos", "Titán Speakerman"};
+            string[] monsterNames = {"Nagito, el titiritero", "Gorlock, el destructor", "El devoramundos", "Titán Speakerman"};
             string monsterName = monsterNames[heroesContraMonstruoClass.randomNumberGenerator(0, 2)];
+
+            int damageDealt = 0;
 
             //stats arquera
             int archerHP = 0;
@@ -635,14 +656,281 @@ namespace heroesContraMonstruoV2
                     Console.WriteLine("\nDruida " + preBattleStatsDisplay, namesArray[3], druidHP, druidDamage, druidDamageReduction);
 
                     Console.WriteLine("\n\nTu enemigo: " + preBattleStatsDisplay, monsterName, monsterHP, monsterDamage, monsterDamageReduction);
-                    Console.ReadKey();
 
                     Console.WriteLine("Pulsa cualquier tecla para iniciar la batalla");
                     Console.ReadKey();
+                    Console.Clear();
 
 
 
                     //Turnos
+                    do
+                    {
+                        //Turno Arquera
+                        actionTries = 0;
+                        actionSelection = 0;
+                        if (monsterHP > 0)
+                        {
+                            if (actualArcherHP > 0)
+                            {
+                                while (actionSelection < 1 || actionSelection > 4)
+                                {
+                                    if (actionTries < 3)
+                                    {
+                                        Console.WriteLine(turnOf, namesArray[0] + actionsMenu);
+                                        actionSelection = Convert.ToInt32(Console.ReadLine());
+                                    }
+                                    else
+                                    {
+                                        Console.WriteLine(actionTriesFail);
+                                        actionSelection = 2;
+                                    }
+                                    switch (actionSelection)
+                                    {
+                                        case 1:
+                                            damageDealt = heroesContraMonstruoClass.damageCalculator(archerDamage, monsterDamageReduction);
+                                            monsterHP -= damageDealt;
+                                            Console.WriteLine(action1MSG, damageDealt, monsterName, monsterHP);
+                                            break;
+                                        case 2:
+                                            Console.WriteLine(action2MSG);
+                                            archerDefending = true;
+                                            break;
+                                        case 3:
+                                            if (archerSkillCD > 5)
+                                            {
+                                                Console.WriteLine(specialCD, archerSkillCD);
+                                            }
+                                            else
+                                            {
+                                                Console.WriteLine(archerSpecial);
+                                                monsterStagger = 2;
+                                            }
+                                            break;
+                                        case 4:
+                                            Console.WriteLine(action4MSG);
+                                            break;
+                                        default:
+                                            Console.WriteLine(mainMenuFail);
+                                            actionTries++;
+                                            break;
+                                    }
+                                }
+                            }
+                            else
+                            {
+                                Console.WriteLine(isDead, namesArray[0]);
+                            }
+                            Console.WriteLine(pressToCont);
+                            Console.ReadKey();
+                        }
+                        Console.Clear();
+
+                        //Turno barbaro
+                        actionTries = 0;
+                        actionSelection = 0;
+                        if (monsterHP > 0)
+                        {
+                            if (actualBarbarianHP > 0)
+                            {
+                                while (actionSelection < 1 || actionSelection > 4)
+                                {
+                                    if (actionTries < 3)
+                                    {
+                                        Console.WriteLine(turnOf, namesArray[1] + actionsMenu);
+                                        actionSelection = Convert.ToInt32(Console.ReadLine());
+                                    }
+                                    else
+                                    {
+                                        Console.WriteLine(actionTriesFail);
+                                        actionSelection = 4;
+                                    }
+                                    switch (actionSelection)
+                                    {
+                                        case 1:
+                                            damageDealt = heroesContraMonstruoClass.damageCalculator(barbarianDamage, monsterDamageReduction);
+                                            monsterHP -= damageDealt;
+                                            Console.WriteLine(action1MSG, damageDealt, monsterName, monsterHP);
+                                            break;
+                                        case 2:
+                                            Console.WriteLine(action2MSG);
+                                            barbarianDefending = true;
+                                            break;
+                                        case 3:
+                                            if (archerSkillCD > 5)
+                                            {
+                                                Console.WriteLine(specialCD, barbarianSkillCD);
+                                            }
+                                            else
+                                            {
+                                                Console.WriteLine(barbarianSpecial);
+                                                barbarianSkillTurns = 2;
+                                            }
+                                            break;
+                                        case 4:
+                                            Console.WriteLine(action4MSG);
+                                            break;
+                                        default:
+                                            Console.WriteLine(mainMenuFail);
+                                            actionTries++;
+                                            break;
+                                    }
+                                }
+                            }
+                            else
+                            {
+                                Console.WriteLine(isDead, namesArray[1]);
+                            }
+                            Console.WriteLine(pressToCont);
+                            Console.ReadKey();
+                        }
+                        Console.Clear();
+
+                        //Turno maga
+                        actionTries = 0;
+                        actionSelection = 0;
+                        if (monsterHP > 0)
+                        {
+                            if (actualMageHP > 0)
+                            {
+                                while (actionSelection < 1 || actionSelection > 4)
+                                {
+                                    if (actionTries < 3)
+                                    {
+                                        Console.WriteLine(turnOf, namesArray[2] + actionsMenu);
+                                        actionSelection = Convert.ToInt32(Console.ReadLine());
+                                    }
+                                    else
+                                    {
+                                        Console.WriteLine(actionTriesFail);
+                                        actionSelection = 4;
+                                    }
+                                    switch (actionSelection)
+                                    {
+                                        case 1:
+                                            damageDealt = heroesContraMonstruoClass.damageCalculator(mageDamage, monsterDamageReduction);
+                                            monsterHP -= damageDealt;
+                                            Console.WriteLine(action1MSG, damageDealt, monsterName, monsterHP);
+                                            break;
+                                        case 2:
+                                            Console.WriteLine(action2MSG);
+                                            mageDefending = true;
+                                            break;
+                                        case 3:
+                                            if (archerSkillCD > 5)
+                                            {
+                                                Console.WriteLine(specialCD, archerSkillCD);
+                                            }
+                                            else
+                                            {
+                                                damageDealt = heroesContraMonstruoClass.damageCalculator((mageDamage * 3), monsterDamageReduction);
+                                                Console.WriteLine(mageSpecial, monsterName, damageDealt);
+                                                monsterHP -= damageDealt;
+                                            }
+                                            break;
+                                        case 4:
+                                            Console.WriteLine(action4MSG);
+                                            break;
+                                        default:
+                                            Console.WriteLine(mainMenuFail);
+                                            actionTries++;
+                                            break;
+                                    }
+                                }
+                            }
+                            else
+                            {
+                                Console.WriteLine(isDead, namesArray[2]);
+                            }
+                            Console.WriteLine(pressToCont);
+                            Console.ReadKey();
+                        }
+                        Console.Clear();
+
+                        //Turno Druida
+                        actionTries = 0;
+                        actionSelection = 0;
+                        if (monsterHP > 0)
+                        {
+                            if (actualDruidHP > 0)
+                            {
+                                while (actionSelection < 1 || actionSelection > 4)
+                                {
+                                    if (actionTries < 3)
+                                    {
+                                        Console.WriteLine(turnOf, namesArray[3] + actionsMenu);
+                                        actionSelection = Convert.ToInt32(Console.ReadLine());
+                                    }
+                                    else
+                                    {
+                                        Console.WriteLine(actionTriesFail);
+                                        actionSelection = 4;
+                                    }
+                                    switch (actionSelection)
+                                    {
+                                        case 1:
+                                            damageDealt = heroesContraMonstruoClass.damageCalculator(druidDamage, monsterDamageReduction);
+                                            monsterHP -= damageDealt;
+                                            Console.WriteLine(action1MSG, damageDealt, monsterName, monsterHP);
+                                            break;
+                                        case 2:
+                                            Console.WriteLine(action2MSG);
+                                            mageDefending = true;
+                                            break;
+                                        case 3:
+                                            if (archerSkillCD > 5)
+                                            {
+                                                Console.WriteLine(specialCD, druidSkillCD);
+                                            }
+                                            else
+                                            {
+                                                Console.WriteLine(druidSpecial);
+                                                if (actualArcherHP > 0)
+                                                {
+                                                    actualArcherHP = heroesContraMonstruoClass.druidHealing(actualArcherHP, archerHP);
+                                                    Console.WriteLine(healMSG, namesArray[0], actualArcherHP, archerHP);
+                                                }
+                                                if (actualBarbarianHP > 0)
+                                                {
+                                                    actualBarbarianHP = heroesContraMonstruoClass.druidHealing(actualBarbarianHP, barbarianHP);
+                                                    Console.WriteLine(healMSG, namesArray[1], actualBarbarianHP, barbarianHP);
+                                                }
+                                                if (actualMageHP > 0)
+                                                {
+                                                    actualMageHP = heroesContraMonstruoClass.druidHealing(actualMageHP, mageHP);
+                                                    Console.WriteLine(healMSG, namesArray[2], actualMageHP, mageHP);
+                                                }
+                                                if (actualDruidHP > 0)
+                                                {
+                                                    actualDruidHP = heroesContraMonstruoClass.druidHealing(actualDruidHP, druidHP);
+                                                    Console.WriteLine(healMSG, namesArray[3], actualDruidHP, druidHP);
+                                                }
+                                            }
+                                            break;
+                                        case 4:
+                                            Console.WriteLine(action4MSG);
+                                            break;
+                                        default:
+                                            Console.WriteLine(mainMenuFail);
+                                            actionTries++;
+                                            break;
+                                    }
+                                }
+                            }
+                            else
+                            {
+                                Console.WriteLine(isDead, namesArray[3]);
+                            }
+                            Console.WriteLine(pressToCont);
+                            Console.ReadKey();
+                        }
+                        Console.Clear();
+                    } while (monsterHP>0 || (actualArcherHP < 1 && actualBarbarianHP < 1 && actualMageHP < 1 && actualDruidHP < 1));
+                    
+                    if (monsterHP < 1) {
+                        Console.Write("has ganao cambia este mensaje luego");
+                    }
+
                 }
             }
         }
