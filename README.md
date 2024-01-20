@@ -77,20 +77,32 @@ string nombres: "a,e,i,o"
 Resultado esperado:
 arrayNombres = {"a", "e", "i", "o"}
 
-
+---
 ## Método damageCalculator
 
 ### Dominio
+Numeros enteros (Int)
 
 ### Valores límite
-Limite superior: 
-Límite inferior: 
+Para ambas variables de daño y de reducción de daño
+Limite superior: +Infinito
+Límite inferior: -Infinito
 
 ### Clases de equivalencia
+Para variable de daño:
+Clases validas: [0,1,2...+Infinito]
+Clases invalidas: [-Infinito...-2,-1]
+
+Para variable de reducción de daño
+Clases validas: [0,1,2...98,99,100]
+Clases invalidas: [-infinito...-2,-1] [101,102,103...+Infinito]
 
 ### Caso de prueba
 
+daño = 100
+reducciónDeDaño = 30;
 
+resultado esperado = 70;
 
 ## Método druidHealing
 
