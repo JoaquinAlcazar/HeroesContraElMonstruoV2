@@ -39,8 +39,16 @@ namespace heroesContraMonstruoV2
             const string healMSG = "Vida actual de {0}: {1}HP/{2}HP";
             const string action4MSG = "Pasas el turno.";
 
+            const string enemyAtk = "{0} ataca a tu equipo.\n";
+            const string partyStatus = "{0} recibe {1} puntos de daño. Vida: {2}/{3}HP";
+            const string barbarianRage = "{0} está enfurecido y no recibe daño";
+            const string monsterStaggerMSG = "{0} está aturdido y no puede atacar";
+
             const string specialCD = "Tu habilidad especial se está recargando. {0} turnos restantes";
             const string isDead = "A {0} no le quedan puntos de vida. No puede atacar";
+
+            const string winMSG = "Has derrotado a {0}, esta noche la taverna estará alegre por ello.\n¿Quieres jugar de nuevo?\n1.Iniciar nueva batalla\n2.Salir";
+            const string loseMSG = "Todos los heroes han muerto, la taverna está de luto.\n¿Quieres jugar de nuevo?\n1.Iniciar nueva batalla\n2.Salir";
 
 
 
@@ -642,6 +650,7 @@ namespace heroesContraMonstruoV2
                             Console.WriteLine(mainMenuFail);
                         }
                     }
+                    dificultySelect = 0;
 
                     //Revisión de stats y selección de nombres
                     Console.Clear();
@@ -700,11 +709,13 @@ namespace heroesContraMonstruoV2
                                             if (archerSkillCD > 5)
                                             {
                                                 Console.WriteLine(specialCD, archerSkillCD);
+                                                actionSelection = 0;
                                             }
                                             else
                                             {
                                                 Console.WriteLine(archerSpecial);
                                                 monsterStagger = 2;
+                                                archerSkillCD = 5;
                                             }
                                             break;
                                         case 4:
@@ -760,11 +771,13 @@ namespace heroesContraMonstruoV2
                                             if (archerSkillCD > 5)
                                             {
                                                 Console.WriteLine(specialCD, barbarianSkillCD);
+                                                actionSelection = 0;
                                             }
                                             else
                                             {
                                                 Console.WriteLine(barbarianSpecial);
                                                 barbarianSkillTurns = 2;
+                                                barbarianSkillCD = 5;
                                             }
                                             break;
                                         case 4:
@@ -817,15 +830,18 @@ namespace heroesContraMonstruoV2
                                             mageDefending = true;
                                             break;
                                         case 3:
-                                            if (archerSkillCD > 5)
+                                            if (mageSkillCD > 5)
                                             {
                                                 Console.WriteLine(specialCD, archerSkillCD);
+                                                actionSelection = 0;
                                             }
                                             else
                                             {
                                                 damageDealt = heroesContraMonstruoClass.damageCalculator((mageDamage * 3), monsterDamageReduction);
                                                 Console.WriteLine(mageSpecial, monsterName, damageDealt);
                                                 monsterHP -= damageDealt;
+                                                mageSkillCD = 5;
+                                                
                                             }
                                             break;
                                         case 4:
@@ -881,6 +897,7 @@ namespace heroesContraMonstruoV2
                                             if (archerSkillCD > 5)
                                             {
                                                 Console.WriteLine(specialCD, druidSkillCD);
+                                                actionSelection = 0;
                                             }
                                             else
                                             {
@@ -905,6 +922,7 @@ namespace heroesContraMonstruoV2
                                                     actualDruidHP = heroesContraMonstruoClass.druidHealing(actualDruidHP, druidHP);
                                                     Console.WriteLine(healMSG, namesArray[3], actualDruidHP, druidHP);
                                                 }
+                                                druidSkillCD = 5;
                                             }
                                             break;
                                         case 4:
@@ -925,12 +943,72 @@ namespace heroesContraMonstruoV2
                             Console.ReadKey();
                         }
                         Console.Clear();
+
+                        //Turno Monstruo
+                        if (monsterHP > 0)
+                        {
+                            
+                            if (monsterStagger == 0)
+                            {
+                                
+                                //Ataque a la arquera
+                                Console.WriteLine(enemyAtk, monsterName);
+                                damageDealt = heroesContraMonstruoClass.damageCalculator(monsterDamage, archerDamageReduction, archerDefending);
+                                actualArcherHP -= damageDealt;
+                                Console.WriteLine(partyStatus, namesArray[0], damageDealt, actualArcherHP, archerHP);
+
+                                //Ataque al barbaro
+                                if (barbarianSkillTurns > 0)
+                                {
+                                    Console.WriteLine(barbarianRage);
+                                    barbarianSkillTurns--;
+                                }
+                                else
+                                {
+                                    Console.WriteLine(enemyAtk, monsterName);
+                                    damageDealt = heroesContraMonstruoClass.damageCalculator(monsterDamage, archerDamageReduction, archerDefending);
+                                    actualArcherHP -= damageDealt;
+                                    Console.WriteLine(partyStatus, namesArray[0], damageDealt, actualArcherHP, archerHP);
+                                }
+
+                                //Ataque a la maga
+                                Console.WriteLine(enemyAtk, monsterName);
+                                damageDealt = heroesContraMonstruoClass.damageCalculator(monsterDamage, archerDamageReduction, archerDefending);
+                                actualArcherHP -= damageDealt;
+                                Console.WriteLine(partyStatus, namesArray[0], damageDealt, actualArcherHP, archerHP);
+
+                                //Ataque al druida
+                                Console.WriteLine(enemyAtk, monsterName);
+                                damageDealt = heroesContraMonstruoClass.damageCalculator(monsterDamage, archerDamageReduction, archerDefending);
+                                actualArcherHP -= damageDealt;
+                                Console.WriteLine(partyStatus, namesArray[0], damageDealt, actualArcherHP, archerHP);
+                            }
+                            else
+                            {
+                                Console.WriteLine(monsterStaggerMSG, monsterName);
+                            }
+
+                            monsterStagger--;
+                            archerSkillCD--;
+                            barbarianSkillCD--;
+                            mageSkillCD--;
+                            druidSkillCD--;
+
+                            Console.WriteLine(pressToCont);
+                            Console.ReadLine();
+                            Console.Clear();
+                        }
                     } while (monsterHP>0 || (actualArcherHP < 1 && actualBarbarianHP < 1 && actualMageHP < 1 && actualDruidHP < 1));
                     
-                    if (monsterHP < 1) {
-                        Console.Write("has ganao cambia este mensaje luego");
+                    if (monsterHP < 1)
+                    {
+                        Console.Write(winMSG, monsterName);
+                        mainMenuSelect = Convert.ToInt32(Console.ReadLine());
+                    } else
+                    {
+                        Console.WriteLine(loseMSG);
+                        mainMenuSelect = Convert.ToInt32(Console.ReadLine());
                     }
-
                 }
             }
         }
