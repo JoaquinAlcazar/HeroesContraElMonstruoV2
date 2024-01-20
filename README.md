@@ -4,8 +4,7 @@
 -Escoger un nombre aleatorio para el monstruo de entre 4
  
 
-##Tests Unitarios
----
+## Tests Unitarios
 ## Método statChecker
 
 ### Dominio
