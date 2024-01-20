@@ -943,7 +943,7 @@ namespace heroesContraMonstruoV2
                             Console.ReadKey();
                         }
                         Console.Clear();
-
+                        
                         //Turno Monstruo
                         if (monsterHP > 0)
                         {
@@ -998,11 +998,12 @@ namespace heroesContraMonstruoV2
                             Console.ReadLine();
                             Console.Clear();
                         }
+                        
                     } while (monsterHP>0 || (actualArcherHP < 1 && actualBarbarianHP < 1 && actualMageHP < 1 && actualDruidHP < 1));
                     
                     if (monsterHP < 1)
                     {
-                        Console.Write(winMSG, monsterName);
+                        Console.WriteLine(winMSG, monsterName);
                         mainMenuSelect = Convert.ToInt32(Console.ReadLine());
                     } else
                     {
