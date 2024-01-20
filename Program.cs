@@ -27,7 +27,7 @@ namespace heroesContraMonstruoV2
 
             const string preBattleStatsDisplay = "{0}\nVida: {1}\nDaño: {2}\nReducción de daño: {3}%";
             const string turnOf = "Turno de {0}: \n";
-            const string actionsMenu = "\n\n¿Que hará?\n1.Atacar al enemigo\n2.Defenderse\n3Habilidad especial\n4.Pasar turno";
+            const string actionsMenu = "\n\n¿Que hará?\n1.Atacar al enemigo\n2.Defenderse\n3.Habilidad especial\n4.Pasar turno.";
             const string actionTriesFail = "Has fallado 3 veces en introducir una acción valida, pasas el turno automáticamente";
 
             const string action1MSG = "Haces {0} puntos de daño a {1}\nVida restante de {1}: {2}";
@@ -960,35 +960,33 @@ namespace heroesContraMonstruoV2
                                 //Ataque al barbaro
                                 if (barbarianSkillTurns > 0)
                                 {
-                                    Console.WriteLine(barbarianRage);
+                                    Console.WriteLine(barbarianRage, namesArray[1]);
                                     barbarianSkillTurns--;
                                 }
                                 else
                                 {
-                                    Console.WriteLine(enemyAtk, monsterName);
-                                    damageDealt = heroesContraMonstruoClass.damageCalculator(monsterDamage, archerDamageReduction, archerDefending);
-                                    actualArcherHP -= damageDealt;
-                                    Console.WriteLine(partyStatus, namesArray[0], damageDealt, actualArcherHP, archerHP);
+                                    damageDealt = heroesContraMonstruoClass.damageCalculator(monsterDamage, barbarianDamageReduction, barbarianDefending);
+                                    actualBarbarianHP -= damageDealt;
+                                    Console.WriteLine(partyStatus, namesArray[1], damageDealt, actualBarbarianHP, barbarianHP);
                                 }
 
                                 //Ataque a la maga
-                                Console.WriteLine(enemyAtk, monsterName);
-                                damageDealt = heroesContraMonstruoClass.damageCalculator(monsterDamage, archerDamageReduction, archerDefending);
-                                actualArcherHP -= damageDealt;
-                                Console.WriteLine(partyStatus, namesArray[0], damageDealt, actualArcherHP, archerHP);
+                                damageDealt = heroesContraMonstruoClass.damageCalculator(monsterDamage, mageDamageReduction, mageDefending);
+                                actualMageHP -= damageDealt;
+                                Console.WriteLine(partyStatus, namesArray[2], damageDealt, actualMageHP, mageHP);
 
                                 //Ataque al druida
-                                Console.WriteLine(enemyAtk, monsterName);
-                                damageDealt = heroesContraMonstruoClass.damageCalculator(monsterDamage, archerDamageReduction, archerDefending);
-                                actualArcherHP -= damageDealt;
-                                Console.WriteLine(partyStatus, namesArray[0], damageDealt, actualArcherHP, archerHP);
+                                damageDealt = heroesContraMonstruoClass.damageCalculator(monsterDamage, druidDamageReduction, druidDefending);
+                                actualDruidHP -= damageDealt;
+                                Console.WriteLine(partyStatus, namesArray[3], damageDealt, actualDruidHP, druidHP);
                             }
                             else
                             {
                                 Console.WriteLine(monsterStaggerMSG, monsterName);
+                                monsterStagger--;
                             }
 
-                            monsterStagger--;
+                            
                             archerSkillCD--;
                             barbarianSkillCD--;
                             mageSkillCD--;
@@ -999,7 +997,7 @@ namespace heroesContraMonstruoV2
                             Console.Clear();
                         }
                         
-                    } while (monsterHP>0 || (actualArcherHP < 1 && actualBarbarianHP < 1 && actualMageHP < 1 && actualDruidHP < 1));
+                    } while (monsterHP>0 && (actualArcherHP > 1 || actualBarbarianHP > 1 || actualMageHP > 1 || actualDruidHP > 1));
                     
                     if (monsterHP < 1)
                     {
